@@ -12,7 +12,7 @@ P(A∩B)=P(A)*P(B|A)=P(B)*P(A|B)
 *  因为x对于每个分类目标来说都一样，所以就是求max(P(x|yi)*p(yi))
 *  P(x|yi)*p(yi)=p(yi)*PI(P(ai|yi)) (PI表示连乘)
 *  而具体的p(ai|yi)和p(yi)都是能从训练样本中统计出来
-   p(ai|yi)表示该类别下该特征出现的概率
-   p(yi)表示全部类别中这个这个类别出现的概率
+    p(ai|yi)表示该类别下该特征出现的概率
+    p(yi)表示全部类别中这个这个类别出现的概率
 ## 2. Knn
 ## 3. Logistic Regression
