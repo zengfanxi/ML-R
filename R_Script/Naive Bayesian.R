@@ -1,10 +1,10 @@
-# ÆÓËØ±´Ò¶Ë¹Ëã·¨
+# æœ´ç´ è´å¶æ–¯ç®—æ³•
 library(caret)
 library(klaR)
 library(pROC)
 library(e1071)
 library(randomForest)
-mydata <- read.csv("C:/Users/Administrator/Desktop/ML/ÆÓËØ±´Ò¶Ë¹-¶¾Ä¢¹½¼ì²â/data.csv",sep=",",header=T)
+mydata <- read.csv("C:/Users/Administrator/Desktop/ML/æœ´ç´ è´å¶æ–¯-æ¯’è˜‘è‡æ£€æµ‹/data.csv",sep=",",header=T)
 str(mydata)
 summary(mydata)
 
@@ -16,37 +16,37 @@ test_data <- mydata[-index,]
 prop.table(table(mydata$type))
 prop.table(table(train_data$type))
 prop.table(table(test_data$type))
-# ½èÖúcaret°üÊµÏÖÌØÕ÷Ñ¡Ôñ
-##¹¹½¨rfeº¯ÊıµÄ¿ØÖÆ²ÎÊı£¨Ê¹ÓÃËæ»úÉ­ÁÖº¯ÊıºÍ10ÕÛ½»²æÑéÖ¤£¬³éÈ¡5×éÑù±¾£©
+# å€ŸåŠ©caretåŒ…å®ç°ç‰¹å¾é€‰æ‹©
+##æ„å»ºrfeå‡½æ•°çš„æ§åˆ¶å‚æ•°ï¼ˆä½¿ç”¨éšæœºæ£®æ—å‡½æ•°å’Œ10æŠ˜äº¤å‰éªŒè¯ï¼ŒæŠ½å–5ç»„æ ·æœ¬ï¼‰
 rfeControl_rf <- rfeControl(
   functions = rfFuncs,
   method = "cv",
   repeats = 5
 )
-##Ê¹ÓÃrfeº¯Êı½øĞĞÌØÕ÷Ñ¡Ôñ
+##ä½¿ç”¨rfeå‡½æ•°è¿›è¡Œç‰¹å¾é€‰æ‹©
 fs_nb <- rfe(x=train_data[,-1],
              y=train_data[,1],
              sizes = seq(4,21,2),
              rfeControl = rfeControl_rf)
 fs_nb
 plot(fs_nb,type=c("g","o"))
-fs_nb$optVariables #Êä³öËùĞèÒªÑ¡ÈëµÄ£¶¸ö±äÁ¿
+fs_nb$optVariables #è¾“å‡ºæ‰€éœ€è¦é€‰å…¥çš„ï¼–ä¸ªå˜é‡
 
-# ½èÖúklrR°üÖĞµÄnaivebayesº¯ÊıÀ´Ô¤²â
+# å€ŸåŠ©klrRåŒ…ä¸­çš„naivebayeså‡½æ•°æ¥é¢„æµ‹
 vars <- c("type",fs_nb$optVariables)
-fit <- NaiveBayes(type ~.,data=train_data[,vars]) #½¨Ä£
-pred <- predict(fit,test_data[,vars][,-1]) #Ô¤²â
-## ¹¹½¨»ìÏı¾ØÕó
+fit <- NaiveBayes(type ~.,data=train_data[,vars]) #å»ºæ¨¡
+pred <- predict(fit,test_data[,vars][,-1]) #é¢„æµ‹
+## æ„å»ºæ··æ·†çŸ©é˜µ
 freq <- table(pred$class,test_data[,1])
 freq
-## Ä£ĞÍ×¼È·ÂÊ
+## æ¨¡å‹å‡†ç¡®ç‡
 accuracy <- sum(diag(freq))/sum(freq)
 accuracy
 
-## Ä£ĞÍAUCÖµ
+## æ¨¡å‹AUCå€¼
 fit_auc <- roc(as.integer(test_data[,1]),
                as.integer(factor(pred$class)))
-## Êä³örocÇúÏß
+## è¾“å‡ºrocæ›²çº¿
 plot(fit_auc,print.auc=T,auc.polygon=T,
      grid = c(0.1,0.2),grid.col=c("green","red"),
      max.auc.polygon=T,auc.polygon.col="steelblue")
