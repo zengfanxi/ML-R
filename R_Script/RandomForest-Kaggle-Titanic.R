@@ -5,7 +5,7 @@ library('scales') # visualization
 library('dplyr') # data manipulation
 library('mice') # imputation
 library('randomForest') # classification algorithm
-setwd("E:/数据科学家的成长/Kaggle/Titanic")
+setwd("...")
 train <- read.table("train.csv",stringsAsFactors = F,header = T,sep=",",na.strings = "")
 test <- read.table("test.csv",stringsAsFactors = F,header = T,sep=",",na.strings = "")
 full  <- bind_rows(train, test) # bind training & test data
